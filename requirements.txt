@@ -3,3 +3,5 @@ uvicorn==0.13.4
 fastapi==0.64.0
 pydantic==1.8.1
 SQLAlchemy==1.4.17
+python-jose==3.2.0
+passlib[bcrypt]==1.7.4
