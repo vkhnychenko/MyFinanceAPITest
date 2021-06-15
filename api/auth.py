@@ -4,7 +4,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from models.auth import UserCreate, Token, User
 from services.auth import AuthService, get_current_user
 
-router = APIRouter(prefix='/auth')
+router = APIRouter(prefix='/auth', tags=['auth'])
 
 
 @router.post('/sign-up', response_model=Token)

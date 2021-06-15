@@ -5,7 +5,7 @@ from services.auth import get_current_user
 from services.operations import OperationsService
 from tables import User
 
-router = APIRouter(prefix='/operations')
+router = APIRouter(prefix='/operations', tags=['operations'])
 
 
 @router.get('/', response_model=List[Operation])
@@ -14,6 +14,15 @@ def get_operations(
         service: OperationsService = Depends(),
         user: User = Depends(get_current_user)
 ):
+    """
+    Get list operations.
+    - **kind**: Filter type operations
+    \f
+    :param kind:
+    :param service:
+    :param user:
+    :return:
+    """
     return service.get_list(user_id=user.id, kind=kind)
 
 
