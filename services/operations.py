@@ -1,14 +1,11 @@
 from typing import List, Optional
-from fastapi import Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from fastapi import HTTPException, status
 import tables
-from database import get_session
 from models.operations import OperationKind, OperationCreate, OperationUpdate
+from .base import BaseService
 
 
-class OperationsService:
-    def __init__(self, session: Session = Depends(get_session)):
-        self.session = session
+class OperationsService(BaseService):
 
     def _get(self, user_id: int, operation_id: int) -> tables.Operation:
         operation = self.session.query(tables.Operation).filter_by(id=operation_id, user_id=user_id).first()

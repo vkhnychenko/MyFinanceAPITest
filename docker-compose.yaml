@@ -1,0 +1,11 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:13
+    restart: always
+    ports:
+      - '32700:5432'
+    volumes:
+      - .data:/var/lib/postgresql/data
+    env_file:
+      - .env.db

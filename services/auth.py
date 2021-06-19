@@ -7,8 +7,7 @@ import tables
 from models.auth import User, Token, UserCreate
 from settings import settings
 from pydantic import ValidationError
-from sqlalchemy.orm import Session
-from database import get_session
+from .base import BaseService
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/auth/sign-in')
 
@@ -17,7 +16,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
     return AuthService.validate_token(token)
 
 
-class AuthService:
+class AuthService(BaseService):
     @classmethod
     def verify_password(cls, plain_password: str, hashed_password: str) -> bool:
         return bcrypt.verify(plain_password, hashed_password)
@@ -67,9 +66,6 @@ class AuthService:
         )
 
         return Token(access_token=token)
-
-    def __init__(self, session: Session = Depends(get_session)):
-        self.session = session
 
     def register_new_user(self, user_data: UserCreate) -> Token:
         user = tables.User(
